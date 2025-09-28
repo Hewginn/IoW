@@ -1,0 +1,44 @@
+name: iow
+
+services:
+  iow-server:
+    image: iow-server/iow-server
+    container_name: iow-server
+    build: .
+    ports:
+      - "29083:80"
+      - "5173:5173"
+    expose:
+      - 5173
+    environment:
+      upload_max_filesize: 64M
+    volumes:
+      - "..:/var/www/"
+      - "./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+
+  iow-db:
+    image: mariadb:latest
+    container_name: iow-db
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: a
+    volumes:
+      - iow-db:/var/lib/mysql
+
+  iow-adminer-local:
+    image: adminer
+    container_name: iow-adminer-local
+    ports:
+      - "29082:8080"
+    environment:
+      - ADMINER_DESIGN=lucas-sandery
+      - ADMINER_DEFAULT_SERVER=iow-db
+    depends_on:
+      - iow-db
+
+volumes:
+  iow-db:
+    driver: local
