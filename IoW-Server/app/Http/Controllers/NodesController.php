@@ -17,7 +17,17 @@ class NodesController extends Controller
     }
 
     public function show(Node $node){
-        dd($node);
+
+        $sensors = $node->sensors()->get();
+        $detailsHeader = ['Location', 'Status', 'Main Unit', 'Key'];
+        $details = [$node->location, $node->status, $node->main_unit, $node->key];
+
+        return view('nodes.show', [
+            'title' => $node->name,
+            'detailsHeader' => $detailsHeader,
+            'details' => $details,
+            'sensors' => $sensors,
+        ]);
     }
 
     public function create(){

@@ -3,8 +3,7 @@
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\NodesController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\JobsController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SensorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationsController;
@@ -21,6 +20,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/nodes', [NodesController::class, 'index'])->name('nodes.index');
     Route::get('/nodes/{node}', [NodesController::class, 'show'])->name('nodes.show');
+
+    Route::get('/sensor/{sensor}', [SensorController::class, 'show'])->name('sensors.show');
 
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
     Route::get('/data', [DataController::class, 'index'])->name('data.index');

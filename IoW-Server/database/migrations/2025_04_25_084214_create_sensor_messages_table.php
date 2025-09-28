@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('sensor_id')->constrained('sensors');
             $table->float('value');
             $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->string('error_message')->nullable();
             $table->string('value_type');
         });

@@ -17,7 +17,10 @@ class SensorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'type' => $this->faker->randomElement(['temperature', 'humidity']),
+            'node_id' => \App\Models\Node::factory(),
+            'status' => $this->faker->randomElement(['active', 'inactive']),
+            'name' => $this->faker->name(),
         ];
     }
 }
