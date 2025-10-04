@@ -16,19 +16,15 @@ class SensorMessageController extends Controller
      */
     public function store(SensorMessageRequest $request)
     {
-        $data=[
-            'sensor_id' => $request->sensor_id,
-            'value' => $request->value,
-            'error_message' => $request->error_message,
-            'value_type' => $request->value_type,
-        ];
 
-        $sensor_message = SensorMessage::create($data);
+        $validated = $request->validated();
+
+        $sensor_message = SensorMessage::create($validated);
 
         return response()->json([
             'message' => 'Data received successfully',
-            'data' => $data,
-        ], 201);
+            'data' => $validated,
+        ], 200);
     }
 
     /**

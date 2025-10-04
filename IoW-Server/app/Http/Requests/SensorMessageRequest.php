@@ -26,6 +26,7 @@ class SensorMessageRequest extends FormRequest
             'value' => ['required', 'numeric'],
             'error_message' => ['nullable', 'string'],
             'value_type' => ['required', 'string'],
+            'unit' => ['required', 'string'],
         ];
     }
 }

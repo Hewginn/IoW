@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('updated_at');
             $table->string('error_message')->nullable();
             $table->string('value_type');
+            $table->string('unit');
         });
     }
 
