@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class NodesController extends Controller
 {
     public function index(){
-        $nodes = Node::query()->get();
+        $nodes = Node::query()->paginate(10);
 
         return view('nodes.index', [
             'title' => 'Nodes',
@@ -31,7 +31,9 @@ class NodesController extends Controller
     }
 
     public function create(){
-        //
+        return view('nodes.create', [
+           'title' => 'Create Node',
+        ]);
     }
 
     public function store(Request $request){

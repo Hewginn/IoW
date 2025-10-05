@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('location');
             $table->string('status');
             $table->string('main_unit');
-            $table->string('key') -> unique();
+            $table->string('token') -> unique();
         });
     }
 

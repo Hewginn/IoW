@@ -19,13 +19,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/nodes', [NodesController::class, 'index'])->name('nodes.index');
+    Route::get('/nodes/create', [NodesController::class, 'create'])->name('nodes.create');
+    Route::post('/nodes', [NodesController::class, 'store'])->name('nodes.store');
     Route::get('/nodes/{node}', [NodesController::class, 'show'])->name('nodes.show');
-
     Route::get('/sensor/{sensor}', [SensorController::class, 'show'])->name('sensors.show');
 
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
     Route::get('/data', [DataController::class, 'index'])->name('data.index');
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
 });
-
 

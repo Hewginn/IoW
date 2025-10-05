@@ -6,30 +6,32 @@ SENSOR_API = '/api/send_data'
 
 #ID of the node
 NODE_ID = 1
+NODE_STATUS = 1
+NODE_NAME = "Main Unit"
+NODE_LOCATION = "Felsoors Szegedi Roza utca 9."
+NODE_MAIN_UNIT = "Raspberry Pi 4 Model B"
+
 
 #The implemented sensors
 #In case of implementing a new sensors the following files should be updated:
 #   sensor_data_control.py
-#   sensor_specs.py
-SENSORS = [
-    {
+SENSORS = {
+    "DHT11":{
         "sensor_id": 1,
-        "name": "DHT11",
-        "type" : "temperature and humidity",
+        "is_online": True,
         "value_type": [
             "humidity",
             "temperature",
         ]
     },
-    {
+    "GUVAS12SD":{
         "sensor_id": 2,
-        "name": "GUVAS12SD",
-        "type": "UV",
+        "is_online": False,
         "value_type": [
             "UV",
         ],
     },
-]
+}
 
 #The frequency of sending HTTP posts
 DATA_SEND_FRQ = 60 

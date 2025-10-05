@@ -22,7 +22,8 @@ class SensorMessageFactory extends Factory
             'value' => $this->faker->randomFloat(2, 1, 100),
             'created_at' => now(),
             'error_message' => $this->faker->sentence(),
-            'value_type' => $this->faker->randomElement(['C', 'cm', '%']),
+            'unit' => $this->faker->randomElement(['C', 'cm', '%']),
+            'value_type' => $this->faker->randomElement(['temperature', 'humidity', 'pressure']),
         ];
     }
 }
