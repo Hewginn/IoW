@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Node;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class NodesController extends Controller
 {
@@ -18,9 +19,9 @@ class NodesController extends Controller
 
     public function show(Node $node){
 
-        $sensors = $node->sensors()->get();
-        $detailsHeader = ['Location', 'Status', 'Main Unit', 'Key'];
-        $details = [$node->location, $node->status, $node->main_unit, $node->key];
+        $sensors = $node->sensors()->paginate(10);
+        $detailsHeader = ['Location', 'Status', 'Main Unit'];
+        $details = [$node->location, $node->status, $node->main_unit];
 
         return view('nodes.show', [
             'title' => $node->name,
@@ -37,7 +38,17 @@ class NodesController extends Controller
     }
 
     public function store(Request $request){
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:nodes',
+            'password' => 'required|string|confirmed|min:8',
+            'location' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'main_unit' => 'required|string|max:255',
+        ]);
+
+        $node = Node::create($validated);
+
+        return redirect()->route('nodes.index');
     }
 
     public function edit(Node $node){
@@ -46,5 +57,15 @@ class NodesController extends Controller
 
     public function update(Request $request, Node $node){
         //
+    }
+
+    public function token($token){
+        if (!$token) {
+            abort(404);
+        }
+        return view('nodes.token', [
+            'title' => 'Token of Created Node',
+            'token' => $token,
+        ]);
     }
 }

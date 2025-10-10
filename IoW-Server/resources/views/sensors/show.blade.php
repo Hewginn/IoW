@@ -13,9 +13,10 @@
         <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Value Type</th>
             <th scope="col">Value</th>
             <th scope="col">Unit</th>
-            <th scope="col">Created At</th>
             <th scope="col">Error</th>
         </tr>
         </thead>
@@ -36,6 +37,9 @@
             </tr>
 
         @endforeach
+        <div class="d-flex">
+            {{ $sensorMessages->links('pagination::bootstrap-5') }}
+        </div>
         </tbody>
     </table>
 

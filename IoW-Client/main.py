@@ -1,29 +1,91 @@
 from config import *
-from node_control import sensor_data_control
-from communication_control import send_sensor_data
+
+from node_control import SensorControl, NodeControl
+
+from communication_control import SessionControl
+
 import time
 
-#Initiating Node: Check in db, update, authenticate...
 
-#Initiating Sensors: Check in db, update
+
+#Initiating Node
+
+node = NodeControl.Node(
+
+    NODE_NAME,
+
+    NODE_PASSWORD,
+
+    NODE_STATUS,
+
+    NODE_LOCATION,
+
+    NODE_MAIN_UNIT
+
+)
+
+
+
+#Initiating Sensors
+
 sensors = [
-    sensor_data_control.DHT11(SENSORS["DHT11"]),
-    sensor_data_control.GUVAS12SD(SENSORS["GUVAS12SD"])
+
+    SensorControl.DHT11(SENSORS["DHT11"]),
+
+    SensorControl.GUVAS12SD(SENSORS["GUVAS12SD"])
+
 ]
+
+
+
+#Initiating "Session"
+
+session = SessionControl.NodeSessionControl(SERVER_URL)
+
+
+
+#Get token
+
+session.connect(PAGE_CONNECT, node.connect())
+
+
+
+#Update node and sensors on server
+
+session.send(PAGE_NODE, node.details())
+
+for sensor in sensors:
+
+    session.send(PAGE_SENSOR, sensor.details())
+
+
+
+
 
 while(True):
 
-    #Gathering sensor data
-    sensorMessages = []
-    for sensor in sensors:
-        sensorMessages += sensor.createMessages()
 
-    print(sensorMessages)
+
+    #Gathering sensor data
+
+    datas = []
+
+    for sensor in sensors:
+
+        datas += sensor.getData()
+
+
+
+    print(datas)
+
+
 
     #Sending HTTP post of sensors
-    session_control = send_sensor_data.SensorSessionControl()
-    for sensorMessage in sensorMessages:
-        session_control.postSensorMessage(sensorMessage, "http://" + SERVER_IP + SENSOR_API)
-    del session_control
+
+    for data in datas:
+
+        session.send(PAGE_DATA, data)
+
+
 
     time.sleep(DATA_SEND_FRQ)

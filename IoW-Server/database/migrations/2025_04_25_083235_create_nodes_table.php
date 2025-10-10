@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('nodes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('password');
             $table->string('location');
             $table->string('status');
             $table->string('main_unit');
-            $table->string('token') -> unique();
         });
     }
 

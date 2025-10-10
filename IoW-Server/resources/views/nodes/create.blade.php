@@ -5,7 +5,9 @@
         <div class="col-md-6 w-50">
             <form class="p-3" action="{{ route('nodes.store') }}" method="POST">
                 @csrf
-                <div class="mb-3"><label for="name" class="form-label">Device Name</label><input type="text" class="form-control" id="username" name="name" required value="{{ old('username') }}"></div>
+                <div class="mb-3"><label for="name" class="form-label">Device Name</label><input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}"></div>
+                <div class="mb-3"><label for="password" class="form-label">Password</label><input type="password" class="form-control" id="password" name="password" required></div>
+                <div class="mb-3"><label for="password_confirmation" class="form-label">Confirm Password</label><input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required></div>
                 <div class="mb-3"><label for="location" class="form-label">Location</label><input type="text" class="form-control" id="location" name="location" required value="{{ old('location') }}"></div>
                 <div class="mb-3"><label for="main_unit" class="form-label">Main Unit</label><input type="text" class="form-control" id="main_unit" name="main_unit" required></div>
                 <div class="mb-3">
@@ -17,7 +19,6 @@
                         <option value="Faulty">Faulty</option>
                     </select>
                 </div>
-                <div class="mb-3"><label for="main_unit" class="form-label">Main Unit</label><input type="text" class="form-control" id="main_unit" name="main_unit" required></div>
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
             @if($errors->any())

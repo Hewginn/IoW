@@ -13,7 +13,7 @@ class SensorController extends Controller
 
     public function show(Sensor $sensor){
 
-        $sensorsMessages = $sensor->messages()->get();
+        $sensorsMessages = $sensor->messages()->paginate(10);
         $detailsHeader = ['Type', 'Status'];
         $details = [$sensor->type, $sensor->status];
 

@@ -28,6 +28,9 @@
             </tr>
 
         @endforeach
+        <div class="d-flex">
+            {{ $sensors->links('pagination::bootstrap-5') }}
+        </div>
         </tbody>
     </table>
 

@@ -1,14 +1,14 @@
 class Sensor():
     def __init__(self, sensor):
         self.is_online = sensor["is_online"]
-        self.sensor_id = sensor["sensor_id"]
         self.values = sensor["value_type"]
+        self.name = 'DUMMY'
 
     def createOfflineMessage(self):
         #Setting sensor status on server side in post
         pass
         
-    def turnOff(self):
+    def turnOffline(self):
         #In case of error use this
         self.is_online = False
 
@@ -16,16 +16,18 @@ class Sensor():
         #Turn on sensor
         self.is_online = True
 
-    def createMessages(self):
-        if self.is_online:
-            json = {
-                "sensor_id": self.sensor_id,
-                "value":  0,
-                "error_message": "NOT DEFINED SENSOR",
-                "value_type": "ERROR",
-                "unit": "ERROR",
-            }
-            return [json]
+    def getData(self):
+        pass
+        
+    def details(self):
+
+        details = {
+            'name': self.name,
+            'status': 'Online' if self.is_online else 'Offline',
+            'type': ', '.join(self.values),
+        }
+
+        return details
 
 class DHT11(Sensor):
 
@@ -37,23 +39,23 @@ class DHT11(Sensor):
         self.humidity = 40
         self.temperature = 24
 
-    def createMessages(self):
-        self.readData()    
+    def getData(self):
+        self.readData()
 
         temperature_message = {
-            "sensor_id": self.sensor_id,
-            "value":  self.temperature,
-            "error_message": None,
+            "sensor_name": self.name,
             "value_type": "temperature",
+            "value":  self.temperature,
             "unit": "C",
+            "error_message": None,
         }
 
         humidity_message = {
-            "sensor_id": self.sensor_id,
-            "value":  self.temperature,
-            "error_message": None,
+            "sensor_name": self.name,
             "value_type": "humidity",
+            "value":  self.temperature,
             "unit": "%",
+            "error_message": None,
         }
 
         return [temperature_message, humidity_message]
@@ -67,15 +69,15 @@ class GUVAS12SD(Sensor):
     def readData(self):
         self.uv = 30
 
-    def createMessages(self):
+    def getData(self):
         self.readData()    
 
         uv_message = {
-            "sensor_id": self.sensor_id,
-            "value":  self.uv,
-            "error_message": None,
+            "sensor_name": self.name,
             "value_type": "UV",
+            "value":  self.uv,
             "unit": "UV",
+            "error_message": None,
         }
 
         return [uv_message]

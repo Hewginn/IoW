@@ -9,9 +9,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationsController;
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register.show');
+//    Route::get('/register', [AuthController::class, 'showRegister'])->name('register.show');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login.show');
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
+//    Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
 
@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/nodes/create', [NodesController::class, 'create'])->name('nodes.create');
     Route::post('/nodes', [NodesController::class, 'store'])->name('nodes.store');
     Route::get('/nodes/{node}', [NodesController::class, 'show'])->name('nodes.show');
+
     Route::get('/sensor/{sensor}', [SensorController::class, 'show'])->name('sensors.show');
 
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');

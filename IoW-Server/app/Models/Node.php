@@ -5,21 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Node extends Model
+class Node extends Authenticatable
 {
-    protected $guarded = [];
     /** @use HasFactory<\Database\Factories\NodeFactory> */
     use HasFactory;
+    use HasApiTokens, \Illuminate\Auth\Authenticatable;
+
+    protected $guarded = [];
+    protected $hidden = ['password'];
 
     protected $table = 'nodes';
 
-    public $timestamps = false;
-
-    public function changes() :HasMany
+    protected function casts(): array
     {
-        return $this->hasMany(NodeChange::class);
+        return [
+            'password' => 'hashed',
+        ];
     }
+
+    public $timestamps = false;
 
     public function sensors() : HasMany{
         return $this->hasMany(Sensor::class);
