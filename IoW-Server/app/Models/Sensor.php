@@ -14,6 +14,8 @@ class Sensor extends Model
 
     protected $table = 'sensors';
 
+    public $timestamps = false;
+
     protected $guarded = [];
 
     public function node() : BelongsTo{

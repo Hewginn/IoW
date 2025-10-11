@@ -28,6 +28,10 @@
             @endforeach
         </tbody>
     </table>
-
-
+    <div class="d-flex justify-content-between align-items-center my-3">
+        <a class="btn btn-outline-primary w-25 ms-3 text-xl-center" href="{{ route('nodes.create') }}" role="button">Add new node</a>
+        <div class="d-flex">
+            {{ $nodes->links('pagination::bootstrap-5') }}
+        </div>
+    </div>
 @endsection

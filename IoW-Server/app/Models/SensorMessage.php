@@ -13,6 +13,8 @@ class SensorMessage extends Model
 
     protected $table = 'sensor_messages';
 
+    public $timestamps = true;
+
     protected $guarded = [];
 
     public function sensor() : BelongsTo{

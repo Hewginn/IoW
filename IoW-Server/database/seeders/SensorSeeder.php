@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sensor;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class SensorSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Sensor::factory()->count(9)->create();
     }
 }
