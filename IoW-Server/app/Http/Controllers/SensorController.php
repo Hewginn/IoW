@@ -13,13 +13,14 @@ class SensorController extends Controller
 
     public function show(Sensor $sensor){
 
-        $sensorsMessages = $sensor->messages()->paginate(10);
+        $sensorsMessages = $sensor->messages()->orderBy('created_at', 'desc')->paginate(10);
         $detailsHeader = ['Type', 'Status'];
         $details = [$sensor->type, $sensor->status];
 
         return view('sensors.show', [
             'title' => $sensor->name,
             'details' => $details,
+            'node' => $sensor->node,
             'detailsHeader' => $detailsHeader,
             'sensorMessages' => $sensorsMessages,
         ]);

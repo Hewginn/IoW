@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SensorMessageRequest;
+use App\Models\DataType;
 use App\Models\Node;
 use App\Models\Sensor;
 use App\Models\SensorMessage;
@@ -60,6 +60,7 @@ class ApiController extends Controller
 
         return response()->json([
             'message' => 'Updated successfully',
+            'control' => $request->user()->control,
         ], 200);
     }
 
@@ -119,8 +120,17 @@ class ApiController extends Controller
             ], 404);
         }
 
+        try {
+            $data_type = DataType::where('data_type', $validated['value_type'])->firstOrFail();
+        }catch (ModelNotFoundException $e){
+            $data_type = DataType::create([
+                'data_type' => $validated['value_type'],
+            ]);
+        }
+
         $sensorMessage = SensorMessage::create([
             'sensor_id' => $sensor->id,
+            'data_type_id' => $data_type->id,
             'value_type' => $validated['value_type'],
             'value' => $validated['value'],
             'unit' => $validated['unit'],

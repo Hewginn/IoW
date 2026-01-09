@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('sensor_messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sensor_id')->constrained('sensors');
+            $table->foreignId('sensor_id')->constrained('sensors')->onDelete('cascade');
+            $table->foreignId('data_type_id')->nullable()->constrained('data_types')->nullOnDelete();
             $table->float('value');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');

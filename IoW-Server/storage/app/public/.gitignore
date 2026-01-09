@@ -1,2 +1,4 @@
 *
 !.gitignore
+!data_types_images/
+!data_types_images/DataTypePlaceHolder.png

@@ -6,10 +6,10 @@
         <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Location</th>
                 <th scope="col">Status</th>
+                <th scope="col">Location</th>
                 <th scope="col">Main Unit</th>
-                <th scope="col">Key</th>
+                <th scope="col">Active</th>
                 <th scope="col">Link</th>
             </tr>
         </thead>
@@ -18,10 +18,25 @@
 
                     <tr>
                         <th scope="row">{{ $node->name }}</th>
-                        <td>{{ $node->location }}</td>
                         <td>{{ $node->status }}</td>
-                        <td>{{ $node->main_unit }}</td>
-                        <td>{{ $node->key }}</td>
+                        @if(is_null($node->location))
+                            <td> - </td>
+                        @else
+                            <td> {{ $node->location }} </td>
+                        @endif
+                        @if(is_null($node->main_unit))
+                            <td> - </td>
+                        @else
+                            <td> {{ $node->main_unit }} </td>
+                        @endif
+                        <td>
+                            <div class="form-check form-switch">
+                                <input data-id="{{$node->id}}"
+                                       class="toggle-control form-check-input"
+                                       type="checkbox"
+                                       {{ $node->control ? 'checked' : '' }}>
+                            </div>
+                        </td>
                         <td> <a href="{{ route('nodes.show', [$node]) }}">Show</a></td>
                     </tr>
 
@@ -34,4 +49,5 @@
             {{ $nodes->links('pagination::bootstrap-5') }}
         </div>
     </div>
+    @include('components.control-toggle')
 @endsection

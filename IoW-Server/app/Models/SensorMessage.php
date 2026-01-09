@@ -20,4 +20,8 @@ class SensorMessage extends Model
     public function sensor() : BelongsTo{
         return $this->belongsTo(Sensor::class);
     }
+
+    public function dataType() : BelongsTo{
+        return $this->belongsTo(DataType::class);
+    }
 }
