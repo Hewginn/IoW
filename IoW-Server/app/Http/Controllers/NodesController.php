@@ -21,12 +21,10 @@ class NodesController extends Controller
 
         $sensors = $node->sensors()->paginate(10);
         $detailsHeader = ['Location', 'Status', 'Main Unit'];
-        $details = [$node->location, $node->status, $node->main_unit];
 
         return view('nodes.show', [
             'title' => $node->name,
-            'detailsHeader' => $detailsHeader,
-            'details' => $details,
+            'node' => $node,
             'sensors' => $sensors,
         ]);
     }
@@ -41,9 +39,10 @@ class NodesController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:nodes',
             'password' => 'required|string|confirmed|min:8',
-            'location' => 'required|string|max:255',
+            'location' => 'string|max:255|nullable',
             'status' => 'required|string|max:255',
-            'main_unit' => 'required|string|max:255',
+            'main_unit' => 'string|max:255|nullable',
+            'control' => 'boolean|nullable',
         ]);
 
         $node = Node::create($validated);
@@ -51,21 +50,18 @@ class NodesController extends Controller
         return redirect()->route('nodes.index');
     }
 
-    public function edit(Node $node){
-        //
+    public function destroy(Node $node){
+        $node->delete();
+        return redirect()->route('nodes.index');
     }
 
-    public function update(Request $request, Node $node){
-        //
-    }
+    public function changeControl(Request $request)
+    {
+        $node = Node::find($request->node_id);
+        $node->control = $request->control;
+        $node->save();
 
-    public function token($token){
-        if (!$token) {
-            abort(404);
-        }
-        return view('nodes.token', [
-            'title' => 'Token of Created Node',
-            'token' => $token,
-        ]);
+        return response()->json(['success'=>'Status change successfully.']);
+
     }
 }

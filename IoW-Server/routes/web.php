@@ -21,12 +21,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/nodes', [NodesController::class, 'index'])->name('nodes.index');
     Route::get('/nodes/create', [NodesController::class, 'create'])->name('nodes.create');
     Route::post('/nodes', [NodesController::class, 'store'])->name('nodes.store');
+    Route::get('/changeControl', [NodesController::class, 'changeControl'])->name('nodes.changeControl');
+    Route::delete('/nodes/{node}/destroy', [NodesController::class, 'destroy'])->name('nodes.destroy');
     Route::get('/nodes/{node}', [NodesController::class, 'show'])->name('nodes.show');
 
     Route::get('/sensor/{sensor}', [SensorController::class, 'show'])->name('sensors.show');
 
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
+
     Route::get('/data', [DataController::class, 'index'])->name('data.index');
+    Route::get('/data/{data_type}', [DataController::class, 'show'])->name('data.show');
+
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
 });
 

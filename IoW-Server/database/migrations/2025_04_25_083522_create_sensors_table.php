@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sensors', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->foreignId('node_id')->constrained('nodes');
+            $table->foreignId('node_id')->constrained('nodes')->onDelete('cascade');
             $table->string('status');
             $table->string('name');
 
