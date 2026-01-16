@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CameraController;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\NodesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SensorController;
@@ -26,6 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/nodes/{node}', [NodesController::class, 'show'])->name('nodes.show');
 
     Route::get('/sensor/{sensor}', [SensorController::class, 'show'])->name('sensors.show');
+    Route::delete('/deleteSensorMessage/{sensorMessage}', [SensorController::class, 'destroy'])->name('sensorMessage.destroy');
+
+    Route::get('/camera/{camera}', [CameraController::class, 'show'])->name('cameras.show');
+    Route::get('/camera-image/{path}', [ImageController::class, 'show'])->where('path', '.*');
+    Route::get('/images', [ImageController::class, 'index'])->name('images.index');
+    Route::delete('/images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
 
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
 

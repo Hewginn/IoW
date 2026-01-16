@@ -18,6 +18,7 @@
             <th scope="col">Value</th>
             <th scope="col">Unit</th>
             <th scope="col">Error</th>
+            <th scope="col">Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +35,15 @@
                 @else
                     <td> {{ $sensorMessage->error_message }} </td>
                 @endif
+                <td>
+                    <form action="{{ route('sensorMessage.destroy', $sensorMessage) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <img src="{{ asset('storage/' . 'DeleteIcon.png') }}" alt="Delete" style="width:16px; height:16px;">
+                        </button>
+                    </form>
+                </td>
             </tr>
 
         @endforeach

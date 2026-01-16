@@ -23,6 +23,15 @@
                         </div>
                     </div>
                 @endforeach
+                <div class="col-md-4">
+                    <div class="card h-100 align-items-center">
+                        <img src="{{ asset('storage/' . 'data_types_images/ImageIcon.png') }}" class="card-img-top img-fluid w-50" alt="Image of data type">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Images</h5>
+                            <a href="{{ route('images.index') }}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

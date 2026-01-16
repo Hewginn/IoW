@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Internet of Wines</title>
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>

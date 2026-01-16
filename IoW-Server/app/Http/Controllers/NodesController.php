@@ -20,12 +20,14 @@ class NodesController extends Controller
     public function show(Node $node){
 
         $sensors = $node->sensors()->paginate(10);
+        $cameras = $node->cameras()->paginate(10);
         $detailsHeader = ['Location', 'Status', 'Main Unit'];
 
         return view('nodes.show', [
             'title' => $node->name,
             'node' => $node,
             'sensors' => $sensors,
+            'cameras' => $cameras,
         ]);
     }
 

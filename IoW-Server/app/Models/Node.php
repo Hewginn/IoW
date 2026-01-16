@@ -31,4 +31,8 @@ class Node extends Authenticatable
     public function sensors() : HasMany{
         return $this->hasMany(Sensor::class);
     }
+
+    public function cameras() : HasMany{
+        return $this->hasMany(Camera::class);
+    }
 }

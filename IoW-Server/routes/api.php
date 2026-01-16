@@ -10,4 +10,6 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::post('/sendData', [ApiController::class, 'storeSensorMessage']);
     Route::post('/updateNode', [ApiController::class, 'updateNode']);
     Route::post('/updateSensors', [ApiController::class, 'updateSensors']);
+    Route::post('/sendImage', [ApiController::class, 'storeImage']);
+    Route::post('/updateCameras', [ApiController::class, 'updateCameras']);
 });

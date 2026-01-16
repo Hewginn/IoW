@@ -71,6 +71,34 @@
     <div class="d-block">
         {{ $sensors->links('pagination::bootstrap-5') }}
     </div>
+    <div class="w-100">
+        <h1 class="text-xl-center py-4 fw-bolder">Cameras</h1>
+    </div>
+
+    <table class="table table-hover justify-content-center">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Resolution</th>
+            <th scope="col">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($cameras as $camera)
+
+            <tr>
+                <th scope="row">{{ $camera->name }}</th>
+                <td>{{ $camera->resolution }}</td>
+                <td>{{ $camera->status }}</td>
+                <td> <a href="{{ route('cameras.show', [$camera]) }}">Show</a></td>
+            </tr>
+
+        @endforeach
+        </tbody>
+    </table>
+    <div class="d-block">
+        {{ $cameras->links('pagination::bootstrap-5') }}
+    </div>
     <a href="{{ route('nodes.index') }}">Go to devices</a>
 
 @endsection

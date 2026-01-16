@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('node_id')->constrained('nodes')->onDelete('cascade');
             $table->string('status');
             $table->string('name');
-
+            $table->unique(['node_id', 'name']);
         });
     }
 
