@@ -33,9 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/camera/{camera}', [CameraController::class, 'show'])->name('cameras.show');
     Route::get('/camera-image/{path}', [ImageController::class, 'show'])->where('path', '.*');
     Route::get('/images', [ImageController::class, 'index'])->name('images.index');
+    Route::get('/images/{image}/vision', [ImageController::class, 'vision'])->name('images.vision');
     Route::delete('/images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
-
-    Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
 
     Route::get('/data', [DataController::class, 'index'])->name('data.index');
     Route::get('/data/{data_type}', [DataController::class, 'show'])->name('data.show');

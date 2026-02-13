@@ -27,9 +27,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('nodes.index') }}">Devices</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('notifications.index') }}">Notifications</a>
-                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     @guest

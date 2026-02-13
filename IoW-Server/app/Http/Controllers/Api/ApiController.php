@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ImageController;
 use App\Models\Camera;
 use App\Models\DataType;
 use App\Models\Image;
@@ -225,9 +226,10 @@ class ApiController extends Controller
         $image = Image::create([
             'camera_id' => $camera->id,
             'path' => $image_path,
-            'value' => 0,
             'error_message' => $validated['error_message'] ?? null,
         ]);
+
+        $analyze_result = $image->analyze();
 
         return response()->json([
             'message' => 'Image sent successfully',

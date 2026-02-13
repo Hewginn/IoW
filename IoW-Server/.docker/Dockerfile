@@ -11,15 +11,39 @@ RUN apt-get install -y \
     zip \
     zlib1g-dev \
     libzip-dev
-    #libpng-dev \
-    #libjpeg-dev \
-    #libfreetype6-dev \
-    #libonig-dev \
-    #supervisor \
-    #wget \
-    #apt-transport-https \
-    #gnupg2 \
-    #unzip
+
+# Install Python 3
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-venv \
+    python3-full \
+    curl
+
+RUN apt-get update && apt-get install -y \
+    libgl1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+ && rm -rf /var/lib/apt/lists/*
+
+
+# Create Python virtual environment
+RUN python3 -m venv /opt/pyenv
+
+# Install pip inside the venv
+RUN /opt/pyenv/bin/python -m pip install --upgrade pip
+
+# Install Python libraries inside the venv
+RUN /opt/pyenv/bin/pip install onnxruntime \
+    numpy \
+    opencv-python
+
+# Make venv Python the default
+RUN ln -s /opt/pyenv/bin/python /usr/local/bin/python \
+    && ln -s /opt/pyenv/bin/pip /usr/local/bin/pip
+
+
 
 RUN a2enmod rewrite proxy proxy_http proxy_wstunnel headers
 
@@ -30,7 +54,6 @@ RUN curl -sSLf \
 
 RUN install-php-extensions \
     gd \
-#    sqlsrv pdo_sqlsrv \
     pdo pdo_mysql \
     mbstring \
     zip \
@@ -40,23 +63,14 @@ RUN install-php-extensions \
 # copy files
 WORKDIR /var/www
 COPY ./apache.conf /etc/apache2/sites-available/000-default.conf
-#COPY ./ /var/www
 
 # install npm
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs
-#    && \
-#    npm install && \
-#    npm run prod && \
-#    rm -rf node_modules
 
 # install composer packages
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-# && \
-#    composer install && \
-#    rm -rf /root/.composer
 
 # cleanup
 RUN rmdir /var/www/html && \
     chown -R www-data: /var/www
-#    rm -rf /var/lib/apt/lists/*
