@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Nette\Schema\ValidationException;
 
@@ -140,6 +141,7 @@ class ApiController extends Controller
                 'value_type' => 'required|string',
                 'value' => 'required|numeric',
                 'unit' => 'required|string',
+                'max' => 'required|numeric',
                 'error_message' => 'nullable|string',
             ]);
         }catch (ValidationException $e){
@@ -161,17 +163,25 @@ class ApiController extends Controller
         try {
             $data_type = DataType::where('data_type', $validated['value_type'])->firstOrFail();
         }catch (ModelNotFoundException $e){
+
+            $icon_path = 'data_types_images/' . $validated['value_type'] . 'Icon.png';
+
+            if (!Storage::disk('public')->exists($icon_path)) {
+                $icon_path = 'data_types_images/DataTypePlaceHolder.png';
+            }
+
             $data_type = DataType::create([
                 'data_type' => $validated['value_type'],
+                'image_path' => $icon_path,
+                'max' => $validated['max'],
+                'unit' => $validated['unit'],
             ]);
         }
 
         $sensorMessage = SensorMessage::create([
             'sensor_id' => $sensor->id,
             'data_type_id' => $data_type->id,
-            'value_type' => $validated['value_type'],
             'value' => $validated['value'],
-            'unit' => $validated['unit'],
             'error_message' => $validated['error_message'] ?? null,
         ]);
 
@@ -229,7 +239,9 @@ class ApiController extends Controller
             'error_message' => $validated['error_message'] ?? null,
         ]);
 
-        $analyze_result = $image->analyze();
+        if($image->error_message !== null){
+            $analyze_result = $image->analyze();
+        }
 
         return response()->json([
             'message' => 'Image sent successfully',

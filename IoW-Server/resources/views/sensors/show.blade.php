@@ -27,9 +27,9 @@
             <tr>
                 <th scope="row">{{ $loop->iteration }}</th>
                 <td>{{ $sensorMessage->created_at }}</td>
-                <td>{{ $sensorMessage->value_type }}</td>
+                <td>{{ $sensorMessage->dataType->data_type }}</td>
                 <td>{{ $sensorMessage->value }}</td>
-                <td>{{ $sensorMessage->unit }}</td>
+                <td>{{ $sensorMessage->dataType->unit }}</td>
                 @if(is_null($sensorMessage->error_message))
                     <td> - </td>
                 @else

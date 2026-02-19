@@ -12,7 +12,7 @@ class SensorController extends Controller
     # Show the measurements of a sensor
     public function show(Sensor $sensor){
 
-        $sensorsMessages = $sensor->messages()->orderBy('created_at', 'desc')->paginate(10);
+        $sensorsMessages = $sensor->messages()->with('dataType')->orderBy('created_at', 'desc')->paginate(10);
         $detailsHeader = ['Type', 'Status', 'Node'];
         $details = [$sensor->type, $sensor->status, $sensor->node->name];
 

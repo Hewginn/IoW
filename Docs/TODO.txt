@@ -1,9 +1,0 @@
-SERVER
-	Pagination
-	
-NODE
-	Communication with HTTP
-		Internal Error Right Now
-	Python Import Solve (config.py)
-	Camera
-	Sensors solve

@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('data_types', function (Blueprint $table) {
             $table->id();
             $table->string('data_type')->unique();
-            $table->string('image_path')->nullable();
+            $table->string('image_path');
+            $table->string('unit');
+            $table->float('max');
             $table->timestamps();
         });
     }

@@ -16,29 +16,38 @@ session = ort.InferenceSession(onnx_model_path, providers=["CPUExecutionProvider
 
 class_names = ["Black Rot", "Downy Mildew", "Esca", "Healthy", "Leaf Blight", "Powdery Mildew"]
 
-# Load and preprocess image
-img = cv2.imread(full_image_path)
-img = cv2.resize(img, (608, 608))
-img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-img = img.astype(np.float32) / 255.0
-img = np.transpose(img, (2, 0, 1))  # HWC → CHW
-img = np.expand_dims(img, 0)        # Add batch dimension
-
-inputs = {session.get_inputs()[0].name: img}
-
-# Run inference
-outputs = session.run(None, inputs)
-probs = outputs[0].squeeze()
-
-results = {
-    class_names[i]: float(probs[i])
-    for i in range(len(probs))
-}
-
-if probs.max() < 0.7:
-    results["result"] = "Can't make prediction"
+# Check pixel brightness
+img = cv2.imread(full_image_path, cv2.IMREAD_GRAYSCALE)
+if np.mean(img) < 80:
+    results = {
+        class_names[i]: 0
+        for i in range(len(class_names))
+    }
+    results["result"] = "Image too dark!"
 else:
-    results["result"] = class_names[np.argmax(probs)]
+    # Load and preprocess image
+    img = cv2.imread(full_image_path)
+    img = cv2.resize(img, (608, 608))
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img = img.astype(np.float32) / 255.0
+    img = np.transpose(img, (2, 0, 1))  # HWC → CHW
+    img = np.expand_dims(img, 0)        # Add batch dimension
+
+    inputs = {session.get_inputs()[0].name: img}
+
+    # Run inference
+    outputs = session.run(None, inputs)
+    probs = outputs[0].squeeze()
+
+    results = {
+        class_names[i]: float(probs[i])
+        for i in range(len(probs))
+    }
+
+    if probs.max() < 0.7:
+        results["result"] = "Can't make prediction"
+    else:
+        results["result"] = class_names[np.argmax(probs)]
 
 # Sending back result to php server
 print(json.dumps(results))

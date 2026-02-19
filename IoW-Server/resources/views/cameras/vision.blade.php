@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-center align-items-center gap-lg-5 mb-4">
 
         <div>
-            <img src="{{ url('/camera-image/' . $image->path) }}" class="img-fluid border-2 border-secondary rounded" style="max-width: 250px;" alt="Image">
+            <img src="{{ url('/camera-image/' . $image->path) }}" class="img-fluid border-2 border-secondary rounded" alt="Image">
         </div>
 
         <div class="text-end">

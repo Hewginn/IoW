@@ -2,10 +2,6 @@
 
 @section('content')
 
-    <div class="w-100">
-        <h1 class="text-xl-center py-4 fw-bolder">Images</h1>
-    </div>
-
     <table class="table table-hover justify-content-center">
         <thead>
         <tr class="text-center align-middle">
@@ -22,6 +18,16 @@
         <tbody>
         @foreach($images as $image)
 
+            @php
+                if($image->vision->result == "Healthy"){
+                    $color = "text-success";
+                }elseif ($image->vision->result == "Can't make prediction"){
+                    $color = "text-warning";
+                }else{
+                    $color = "text-danger";
+                }
+            @endphp
+
             <tr class="text-center align-middle">
                 <th scope="row">{{ $loop->iteration }}</th>
                 <td>
@@ -30,7 +36,7 @@
                 </td>
                 <td>{{ $image->created_at }}</td>
                 @if($image->vision)
-                    <td> <a href="{{ route('images.vision', $image) }}">{{ $image->vision->result }}</a></td>
+                    <td> <a class="{{ $color }}" href="{{ route('images.vision', $image) }}">{{ $image->vision->result }}</a></td>
                 @else
                     <td> - </td>
                 @endif

@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
 
     Route::get('/data', [DataController::class, 'index'])->name('data.index');
+    Route::delete('/data/destroy', [DataController::class, 'destroy'])->name('data.destroy');
     Route::get('/data/{data_type}', [DataController::class, 'show'])->name('data.show');
 
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
