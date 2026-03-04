@@ -20,17 +20,19 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card shadow-sm text-center h-100">
-                    <div class="card-header fw-semibold">Latest Image</div>
-                    <div class="card-body">
-                        <img src="{{ url('/camera-image/' . $image->path) }}" class="img-fluid border-2 border-secondary rounded" alt="Image">
-                        <p class="mt-3 fs-5">
-                            <strong>{{ $image->camera->name }}</strong>
-                        </p>
+            @if($image)
+                <div class="col-md-4">
+                    <div class="card shadow-sm text-center h-100">
+                        <div class="card-header fw-semibold">Latest Image</div>
+                        <div class="card-body">
+                            <img src="{{ url('/camera-image/' . $image->path) }}" class="img-fluid border-2 border-secondary rounded" alt="Image">
+                            <p class="mt-3 fs-5">
+                                <strong>{{ $image->camera->name }}</strong>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
             @foreach($data_types as $data_type)
                 <div class="col-md-4">

@@ -21,12 +21,14 @@
         @foreach($images as $image)
 
             @php
-                if($image->vision->result == "Healthy"){
-                    $color = "text-success";
-                }elseif ($image->vision->result == "Can't make prediction"){
-                    $color = "text-warning";
-                }else{
-                    $color = "text-danger";
+                if($image->vision !== null){
+                    if($image->vision->result == "Healthy"){
+                        $color = "text-success";
+                    }elseif ($image->vision->result == "Can't make prediction"){
+                        $color = "text-warning";
+                    }else{
+                        $color = "text-danger";
+                    }
                 }
             @endphp
 

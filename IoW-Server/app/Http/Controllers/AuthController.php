@@ -50,13 +50,33 @@ class AuthController extends Controller
         ]);
     }
 
-//    public function logout(Request $request){
-//        Auth::logout();
-//
-//        $request->session()->invalidate();
-//
-//        $request->session()->regenerateToken();
-//
-//        return redirect()->route('login.show');
-//    }
+    public function showChangePassword (Request $request){
+        return view('auth.change-password', [
+            'title' => 'Change Password',
+        ]);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'new_password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $user = $request->user();
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return back()->with('success', 'Password updated successfully.');
+    }
+
+    public function logout(Request $request){
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login.show');
+    }
 }

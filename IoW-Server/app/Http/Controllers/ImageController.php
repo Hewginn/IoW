@@ -54,7 +54,7 @@ class ImageController extends Controller
                 DB::raw('`Downy Mildew` as downy_mildew'),
                 DB::raw('`Powdery Mildew` as powdery_mildew'),
             ])
-            ->where('id', $image->id)
+            ->where('image_id', $image->id)
             ->first();
 
 

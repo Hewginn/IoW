@@ -8,7 +8,9 @@
             <div class="col text-lg-center fw-bold py-4">Status</div>
             <div class="col text-lg-center fw-bold py-4">Location</div>
             <div class="col text-lg-center fw-bold py-4">Main Unit</div>
+            <div class="col text-lg-center fw-bold py-4">Analyze images</div>
             <div class="col text-lg-center fw-bold py-4">Active</div>
+            <div class="col text-lg-center fw-bold py-4">Edit</div>
             <div class="col text-lg-center fw-bold py-4">Delete</div>
         </div>
 
@@ -24,6 +26,14 @@
             </div>
 
             <div class="col text-lg-center py-4">
+                @if($node->analyze_images)
+                    Yes
+                @else
+                    No
+                @endif
+            </div>
+
+            <div class="col text-lg-center py-4">
                 <div class="form-check form-switch d-inline-block">
                     <input data-id="{{$node->id}}"
                            class="toggle-control form-check-input"
@@ -32,6 +42,12 @@
                 </div>
             </div>
             @include('components.control-toggle')
+
+            <div class="col text-lg-center py-4">
+                <a href="{{ route('nodes.edit', [$node]) }}" class="btn btn-warning btn-sm me-2">
+                    Edit Node
+                </a>
+            </div>
 
             <div class="col text-lg-center py-4">
                 <form action="{{ route('nodes.destroy', [$node]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this node?');" style="display:inline;">

@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/nodes', [NodesController::class, 'store'])->name('nodes.store');
     Route::get('/changeControl', [NodesController::class, 'changeControl'])->name('nodes.changeControl');
     Route::delete('/nodes/{node}/destroy', [NodesController::class, 'destroy'])->name('nodes.destroy');
+    Route::get('/nodes/edit/{node}', [NodesController::class, 'edit'])->name('nodes.edit');
+    Route::put('/nodes/update/{node}', [NodesController::class, 'update'])->name('nodes.update');
     Route::get('/nodes/{node}', [NodesController::class, 'show'])->name('nodes.show');
 
     Route::get('/sensor/{sensor}', [SensorController::class, 'show'])->name('sensors.show');
@@ -39,6 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/data', [DataController::class, 'index'])->name('data.index');
     Route::delete('/data/destroy', [DataController::class, 'destroy'])->name('data.destroy');
     Route::get('/data/{data_type}', [DataController::class, 'show'])->name('data.show');
+    Route::post('data/chart-settings/{data_type}', [DataController::class, 'storeChartSettings'])->name('data.storeChartSettings');
+
+    Route::get('/change-password', [AuthController::class, 'showChangePassword'])->name('changePassword.show');
+    Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changePassword');
 
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
 });

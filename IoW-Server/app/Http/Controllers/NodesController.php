@@ -45,6 +45,7 @@ class NodesController extends Controller
             'status' => 'required|string|max:255',
             'main_unit' => 'string|max:255|nullable',
             'control' => 'boolean|nullable',
+            'analyze_images' => 'boolean|required',
         ]);
 
         $node = Node::create($validated);
@@ -65,5 +66,39 @@ class NodesController extends Controller
 
         return response()->json(['success'=>'Status change successfully.']);
 
+    }
+
+    public function edit(Node $node){
+        return view('nodes.edit', [
+            'title' => 'Edit Node',
+            'node' => $node,
+        ]);
+    }
+
+    public function update(Request $request, Node $node)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'password' => ['nullable', 'string', 'min:6', 'confirmed'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'main_unit' => ['nullable', 'string', 'max:255'],
+            'status' => ['required', 'in:Online,Offline,In Development,Faulty'],
+            'control' => ['sometimes', 'boolean'],
+            'analyze_images' => ['sometimes', 'boolean'],
+        ]);
+
+        $node->name = $validated['name'];
+        if (!empty($validated['password'])) {
+            $node->password = bcrypt($validated['password']);
+        }
+        $node->location = $validated['location'] ?? null;
+        $node->main_unit = $validated['main_unit'] ?? null;
+        $node->status = $validated['status'];
+        $node->control = $request->has('control') ? true : false;
+        $node->analyze_images = $request->has('analyze_images') ? true : false;
+
+        $node->save();
+
+        return redirect()->route('nodes.index')->with('success', 'Node updated successfully.');
     }
 }

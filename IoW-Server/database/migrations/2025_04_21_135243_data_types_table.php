@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('image_path');
             $table->string('unit');
             $table->float('max');
+            $table->string('aggregate_by')->nullable();
+            $table->float('aggregate_interval')->nullable();
+            $table->string('diagram_type')->nullable();
             $table->timestamps();
         });
     }

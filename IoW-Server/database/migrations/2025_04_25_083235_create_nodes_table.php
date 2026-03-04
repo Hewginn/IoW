@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('main_unit')->nullable();
             $table->boolean('control')->default(false);
+            $table->boolean('analyze_images')->default(true);
         });
     }
 

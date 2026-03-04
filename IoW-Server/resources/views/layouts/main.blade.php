@@ -39,6 +39,9 @@
                     @endguest
                     @auth
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('changePassword.show') }}">Change Password</a>
+                        </li>
+                        <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST" class="m-0">
                                 @csrf
                                 <button class="nav-link">Logout</button>

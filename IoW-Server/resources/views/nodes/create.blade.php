@@ -25,6 +25,12 @@
                         <label class="form-check-label" for="control">Active</label>
                     </div>
                 </div>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="analyze_images" name="analyze_images" value="1" checked>
+                        <label class="form-check-label" for="analyze_images">Analyze the images sent by this node</label>
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
             @if($errors->any())

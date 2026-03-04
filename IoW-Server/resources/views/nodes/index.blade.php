@@ -10,6 +10,7 @@
                 <th scope="col">Location</th>
                 <th scope="col">Main Unit</th>
                 <th scope="col">Active</th>
+                <th scope="col">Analyze images</th>
                 <th scope="col">Link</th>
             </tr>
         </thead>
@@ -37,6 +38,11 @@
                                        {{ $node->control ? 'checked' : '' }}>
                             </div>
                         </td>
+                        @if($node->analyze_images)
+                            <td>Yes</td>
+                        @else
+                            <td>No</td>
+                        @endif
                         <td> <a href="{{ route('nodes.show', [$node]) }}">Show</a></td>
                     </tr>
 

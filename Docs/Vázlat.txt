@@ -1,2 +1,140 @@
 
+Bevezetés
+Kapcsolódó munkák
+	1. A bor kultúra három eleme
+	2. IoT a szőlészetben
+		2.1. Üzleti oldal
+			2.1.1. Szőlészet folyamata
+			2.1.2. Munkák a szőlőben
+			2.1.3. IoT használata a szőlőben
+		2.2. Technikai oldal
+			2.2.1. Rendszer architektúra
+			2.2.2. Technológiák
+				2.2.2.1. Vezérlők
+				2.2.2.2. Tápellátás
+				2.2.2.3. Kommunikációs eszközök
+				2.2.2.4. Szenzorok
+			2.2.3. Speciális megoldások
+				2.2.3.1. UAV, Robotok
+				2.2.3.2. Gépi látás
+	3. IoT a borászatban
+		3.1. Üzleti oldal
+			3.1.1. Borászat folyamata
+			3.1.2. IoT használata a borászatban
+		3.2. Technikai oldak
+			3.2.1. Rendszer architektúra
+			3.2.2. Technológiák
+				3.2.2.1. Környezeti szenzorok
+				3.2.2.2. Bor szintmérő szenzorok
+				3.2.2.3. Bor kémiai szenzorok
+			3.2.3. Okos hordók
+				3.2.3.1. Bója
+				3.2.3.2. Okos dugó
+				3.2.3.3. Rezonancia
+				3.2.3.4. Úszófedélen
+	4. Előnyök és hátrányok
+		4.1. Előnyök
+		4.2. Hátrányok
+	5. Piackutatás
+		5.1. Okos mezőgazdaság
+		5.2. Magyar borpiac
+	6. Kutatás összefoglalás
+BorHáló prototípus
+	1. Követelmények
+		1.1. Szerver használati esetek
+			1.1.1. Fiók használat
+			1.1.2. Összesítő 'home' oldal megtekintése
+			1.1.3. Navigáció
+			1.1.4. Adat megtekintés
+			1.1.5. Eszköz kezelés
+			1.1.6. Adat feltöltés
+			1.1.7. Gépi látás erdmények megtekintése
+		1.2. Szenzor állomás
+		1.3. Gépi látás
+	2. Architektúra terv
+		2.1. Teljes rendszer
+			2.1.1. Architektúra terv képek
+			2.1.2. Komponensek
+			2.1.3. Állomás regisztrálás
+			2.1.4. Adatfolyam
+		2.2. Szerver struktúra terv
+			2.2.1. Laravel struktúra
+				Model-Controller-Route-Blade
+			2.2.2. Főbb modellek
+		2.3. Adatbázis
+			2.3.1. Adat-kapcsolat diagramm
+			2.3.2. Fontosabb táblák
+		2.4. Szenzor állomás
+			2.4.1. Vezérlő
+			2.4.2. Szenzorok
+			2.4.3. Kamera
+			2.4.5. Kommunikáció
+			2.4.7. Kód struktúra terv	
+		2.5. Gépi látás terv
+			2.5.1. Osztályozási gépi látás
+			2.5.2. Cél betegségek
+			2.5.3. Használt adatbázis
+	3. Használt technológiák
+		3.1. Laravel
+		3.2. Ultralytics
+			3.2.1 Konvolúciós hálók
+		3.3. Docker
+			3.3.1 Konténerek
+		3.4. Mysql
+		3.5. Bootstraps
+	4. Használt fejlesztői eszközök
+		4.1. PhpStorm
+		4.2. VScode
+		4.3. GitHub
+		4.4. RealVNC
+		4.5. Raspberry PI
+		4.6. Breadboard
+		4.7. Google Colab
+	5. Node implementálása
+		5.1. Raspberry Pi 4
+		5.2. Beágyzott kód
+		5.3. Szenzorok
+			5.1.1. Bekötés
+			5.1.2. Kapcsolási rajz
+			5.1.3. Könyvtárak
+			5.1.4. Kód
+		5.4. Raspberry kamera
+			5.2.1. Bekötés
+			5.2.2. Könyvtár
+			5.2.3. Konfiguráció
+			5.2.2. Kód
+		5.5. Szerver kapcsolat
+			5.3.1. python request
+			5.3.2. Üzenet küldés
+			5.3.3. Autentikáció
+		5.6. Tápellátás
+	6. Szerver implementálása
+		6.1. Adatbázis
+		6.3. Szenzor állomás API
+		6.4. Adat feldolgozás
+		6.5. Frontend, design
+		6.5. Oldal struktúra
+		6.6. Adatok megjelenítése
+	7. Gépi látás implementálása
+		7.1. Tanítási folyamat
+		7.2. Elkészült modellek
+		7.3. Onnx model
+		7.4. Gépi látás skript
+		7.5. Gépi látás integráció
+	8. Tesztelés
+		8.1. Teszt folyamat bemutatása
+		8.2. Teszt kiértékelése
+	9. További munkák, hiányosságok
+		9.1. Tápellátás
+		9.2. Kommunikációs kapcsolat
+		9.3. Szenzor állomás doboz
+		9.4. Gépi látás mozgatása
+Összefoglalás
+
+TODO:
+	Doboz elkészítése
+	Hiba hiba, kód javítás
+	Tesztelés
+	Állomás expect
+	 
 

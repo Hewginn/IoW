@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ImageController;
 use App\Models\Camera;
 use App\Models\DataType;
 use App\Models\Image;
@@ -12,7 +11,6 @@ use App\Models\Sensor;
 use App\Models\SensorMessage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -194,7 +192,7 @@ class ApiController extends Controller
     public function storeImage(Request $request)
     {
 
-        $node_id = $request->user()->id;
+        $node = $request->user();
 
         # Validate the data
         try {
@@ -202,7 +200,7 @@ class ApiController extends Controller
                 'camera_name' => [
                     'required',
                     'string',
-                    Rule::exists('cameras', 'name')->where('node_id', $node_id),
+                    Rule::exists('cameras', 'name')->where('node_id', $node->id),
                 ],
                 'image' => 'required|image',
                 'error_message' => 'nullable|string',
@@ -215,7 +213,7 @@ class ApiController extends Controller
 
         # Getting camera model
         try {
-            $camera = Camera::where('node_id', $node_id)->where('name', $validated['camera_name'])->firstOrFail();
+            $camera = Camera::where('node_id', $node->id)->where('name', $validated['camera_name'])->firstOrFail();
         }catch (ModelNotFoundException $e){
             return response()->json([
                 'message' => 'Model not found',
@@ -224,7 +222,7 @@ class ApiController extends Controller
 
         # Saving the image
         if ($request->hasFile('image')) {
-            $path = 'images/' . $node_id . '/' . $camera->name ;
+            $path = 'images/' . $node->id . '/' . $camera->name ;
             $image_path = $request->file('image')->store($path, 'local');
         }else{
             return response()->json([
@@ -239,8 +237,8 @@ class ApiController extends Controller
             'error_message' => $validated['error_message'] ?? null,
         ]);
 
-        if($image->error_message !== null){
-            $analyze_result = $image->analyze();
+        if(is_null($image->error_message) && $node->analyze_images === 1) {
+                $analyze_result = $image->analyze();
         }
 
         return response()->json([
