@@ -58,9 +58,9 @@ BorHáló prototípus
 			2.1.3. Állomás regisztrálás
 			2.1.4. Adatfolyam
 		2.2. Szerver struktúra terv
+			2.1.2. 
 			2.2.1. Laravel struktúra
 				Model-Controller-Route-Blade
-			2.2.2. Főbb modellek
 		2.3. Adatbázis
 			2.3.1. Adat-kapcsolat diagramm
 			2.3.2. Fontosabb táblák
@@ -74,6 +74,7 @@ BorHáló prototípus
 			2.5.1. Osztályozási gépi látás
 			2.5.2. Cél betegségek
 			2.5.3. Használt adatbázis
+			2.5.4. Integráció
 	3. Használt technológiák
 		3.1. Laravel
 		3.2. Ultralytics
@@ -109,11 +110,12 @@ BorHáló prototípus
 			5.3.3. Autentikáció
 		5.6. Tápellátás
 	6. Szerver implementálása
+		6.1. Konténerek
 		6.1. Adatbázis
 		6.3. Szenzor állomás API
 		6.4. Adat feldolgozás
-		6.5. Frontend, design
 		6.5. Oldal struktúra
+		6.5. Frontend, design
 		6.6. Adatok megjelenítése
 	7. Gépi látás implementálása
 		7.1. Tanítási folyamat

@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('data_types', function (Blueprint $table) {
             $table->id();
             $table->string('data_type')->unique();
-            $table->string('image_path');
+            $table->text('image_path');
             $table->string('unit');
             $table->float('max');
             $table->string('aggregate_by')->nullable();
-            $table->float('aggregate_interval')->nullable();
+            $table->integer('aggregate_interval')->nullable();
             $table->string('diagram_type')->nullable();
             $table->timestamps();
         });

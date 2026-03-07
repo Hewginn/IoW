@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('camera_id')->constrained('cameras')->onDelete('cascade');
-            $table->string('path')->nullable();
+            $table->text('path')->nullable();
             $table->string('error_message')->nullable();
             $table->timestamps();
         });
