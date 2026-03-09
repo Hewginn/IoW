@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('type');
             $table->foreignId('node_id')->constrained('nodes')->onDelete('cascade');
-            $table->string('status');
+            $table->enum('status', ['Online', 'Offline', 'In Development', 'Faulty'])->default('Offline');
             $table->string('name');
             $table->unique(['node_id', 'name']);
         });

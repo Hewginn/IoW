@@ -8,7 +8,7 @@ import cv2
 # Getting the path to the model and to the image
 image_path = sys.argv[1]
 full_image_path = os.path.join("/var/www/storage/app/private", image_path)
-onnx_model_path = "/var/www/machine_vision/weights/best_18.onnx"
+onnx_model_path = "/var/www/machine_vision/weights/best_20_resize.onnx"
 
 
 # Load ONNX model

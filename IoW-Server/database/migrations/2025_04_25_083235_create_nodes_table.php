@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('location')->nullable();
-            $table->string('status');
+            $table->enum('status', ['Online', 'Offline', 'In Development', 'Faulty'])->default('Offline');
             $table->string('main_unit')->nullable();
             $table->boolean('control')->default(false);
             $table->boolean('analyze_images')->default(true);

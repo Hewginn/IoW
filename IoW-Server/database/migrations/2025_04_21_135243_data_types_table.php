@@ -17,9 +17,9 @@ return new class extends Migration
             $table->text('image_path');
             $table->string('unit');
             $table->float('max');
-            $table->string('aggregate_by')->nullable();
-            $table->integer('aggregate_interval')->nullable();
-            $table->string('diagram_type')->nullable();
+            $table->enum('aggregate_by', ['avg', 'sum', 'max', 'min', 'median', 'mode', 'count'])->nullable();
+            $table->unsignedSmallInteger('aggregate_interval')->nullable();
+            $table->enum('diagram_type', ['line', 'bar'])->nullable();
             $table->timestamps();
         });
     }
