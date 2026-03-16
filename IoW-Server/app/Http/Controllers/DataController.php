@@ -24,16 +24,17 @@ class DataController extends Controller
     }
 
     // Returning all data from one data type (example return all temperature data)
-    public function show(DataType $data_type){
+    public function show(DataType $data_type)
+    {
 
         // Creating quarry builder
         $data = $data_type->messages();
 
         //Getting raw data
-        $raw_data=$data->orderBy('created_at', 'desc')->paginate(10);
+        $raw_data = $data->orderBy('created_at', 'desc')->paginate(10);
 
         // Checking if is there any data
-        if($raw_data->isEmpty()){
+        if ($raw_data->isEmpty()) {
             return view('data.show', [
                 'title' => ucfirst($data_type->data_type),
                 'data_type' => $data_type,
@@ -43,7 +44,10 @@ class DataController extends Controller
         }
 
         //Checking if chart setting are set
-        if(is_null($data_type->aggregate_by) or is_null($data_type->aggregate_interval or is_null($data_type->diagram_type))){
+        if (is_null($data_type->aggregate_by)
+            or is_null($data_type->aggregate_length
+                or is_null($data_type->diagram_type)
+                    or is_null($data_type->time))) {
             return view('data.show', [
                 'title' => ucfirst($data_type->data_type),
                 'data_type' => $data_type,
@@ -53,56 +57,54 @@ class DataController extends Controller
             ]);
         }
 
-        // Getting bucket duration
-        $hours = $data_type->aggregate_interval;
+        $unit = $data_type->aggregate_time; // hour | day | month | year
+        $size = $data_type->aggregate_length;
 
-        // Simple chart with every data if duration is 0
-        if($hours == 0){
-            $chart_data = $data
-                ->whereNull('error_message')
-                ->orderBy('created_at', 'asc')
-                ->get()
-                ->map(function($item){
-                    return [
-                        'label' => $item->created_at->copy()->format('Y-m-d H:i'),
-                        'values' => $item->value,
-                    ];
-                });
+        $chart_data = $data_type->messages()
+            ->whereNull('error_message')
+            ->orderBy('created_at', 'asc')
+            ->get()
+            ->groupBy(function ($item) use ($unit, $size) {
 
-        }else{
+                $date = $item->created_at->copy();
 
-            // Getting chart data grouped into duration buckets
-            $chart_data = $data_type->messages()
-                ->whereNull('error_message')
-                ->orderBy('created_at', 'asc')
-                ->get()
-                ->groupBy(function ($item) use ($hours) {
+                switch ($unit) {
 
-                    // Grouping by bucket duration and date
+                    case 'hour':
+                        $bucket = floor($date->hour / $size) * $size;
+                        $date->setTime($bucket, 0, 0);
+                        break;
 
-                    $date = $item->created_at->copy();
+                    case 'day':
+                        $bucket = floor(($date->day - 1) / $size) * $size + 1;
+                        $date->setDate($date->year, $date->month, $bucket)->startOfDay();
+                        break;
 
-                    // Starting bucket from round figure
-                    $bucketStartHour = floor($date->hour / $hours) * $hours;
+                    case 'month':
+                        $bucket = floor(($date->month - 1) / $size) * $size + 1;
+                        $date->setDate($date->year, $bucket, 1)->startOfDay();
+                        break;
 
-                    return $date
-                        ->setTime($bucketStartHour, 0, 0)
-                        ->format('Y-m-d H:i:s');
-                })
-                ->map(function ($group, $bucketStart) use ($hours) {
+                    case 'year':
+                        $bucket = floor($date->year / $size) * $size;
+                        $date->setDate($bucket, 1, 1)->startOfDay();
+                        break;
+                }
 
-                    // Creating collections from the buckets with the labels (dates) and values
+                return $date->format('Y-m-d H:i:s');
+            })
+            ->map(function ($group, $bucketStart) use ($unit, $size) {
 
-                    $start = Carbon::parse($bucketStart);
-                    $end = $start->copy()->addHours($hours);
-                    return [
-                        'label' => $start->format('Y-m-d H:i') . ' - ' . $end->format('H:i'),
-                        'start' => $start->toDateTimeString(),
-                        'end'   => $end->toDateTimeString(),
-                        'values' => $group->pluck('value')->values()->toArray(),
-                    ];
-                });
-        }
+                $start = Carbon::parse($bucketStart);
+                $end = $start->copy()->add($size, $unit);
+
+                return [
+                    'label' => $start->format('Y-m-d H:i') . ' - ' . $end->format('Y-m-d H:i'),
+                    'start' => $start->toDateTimeString(),
+                    'end' => $end->toDateTimeString(),
+                    'values' => $group->pluck('value')->values()->toArray(),
+                ];
+            });
 
         // Checking if making a chart is possible
         if($chart_data->isEmpty()){
@@ -119,7 +121,7 @@ class DataController extends Controller
         $labels = $chart_data->pluck('label')->toArray();
 
         // If duration is set to 0 then just get the values if not aggregate
-        if($hours == 0){
+        if($size == 0){
             $values = $chart_data->pluck('values')->toArray();
         }else{
             $values = (new \App\Services\AggregateService)->aggregate($chart_data->pluck('values')->toArray(), $data_type->aggregate_by);
@@ -165,12 +167,14 @@ class DataController extends Controller
     public function storeChartSettings(Request $request, DataType $data_type){
         $validated = $request->validate([
             'aggregate_by' => ['required', 'string', 'in:avg,sum,max,min,median,mode,count'],
-            'aggregate_interval' => ['required', 'integer', 'min:0', 'max:24'],
+            'aggregate_time' => ['required', 'string', 'in:hour,day,month,year'],
+            'aggregate_length' => ['required', 'integer', 'min:0', 'max:24'],
             'diagram_type' => ['required', 'string', 'in:bar,line'],
         ]);
 
         $data_type->aggregate_by = $validated['aggregate_by'];
-        $data_type->aggregate_interval = $validated['aggregate_interval'];
+        $data_type->aggregate_time = $validated['aggregate_time'];
+        $data_type->aggregate_length = $validated['aggregate_length'];
         $data_type->diagram_type = $validated['diagram_type'];
         $data_type->save();
 

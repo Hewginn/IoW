@@ -39,14 +39,6 @@
             </tr>
             <tr class="text-center align-middle">
                 <td>
-                    Leaf Blight
-                </td>
-                <td>
-                    {{ $vision->leaf_blight }}
-                </td>
-            </tr>
-            <tr class="text-center align-middle">
-                <td>
                     Esca
                 </td>
                 <td>

@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('unit');
             $table->float('max');
             $table->enum('aggregate_by', ['avg', 'sum', 'max', 'min', 'median', 'mode', 'count'])->nullable();
-            $table->unsignedSmallInteger('aggregate_interval')->nullable();
+            $table->enum('aggregate_time', ['hour', 'day', 'month', 'year'])->nullable();
+            $table->unsignedSmallInteger('aggregate_length')->nullable();
             $table->enum('diagram_type', ['line', 'bar'])->nullable();
-            $table->timestamps();
         });
     }
 

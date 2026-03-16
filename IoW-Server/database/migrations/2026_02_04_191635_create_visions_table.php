@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('visions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('image_id')->constrained('images')->onDelete('cascade');
+            $table->foreignId('image_id')->unique()->constrained('images')->onDelete('cascade');
             $table->string('result');
             $table->float('Healthy');
             $table->float('Black Rot');
-            $table->float('Leaf Blight');
             $table->float('Esca');
             $table->float('Downy Mildew');
             $table->float('Powdery Mildew');

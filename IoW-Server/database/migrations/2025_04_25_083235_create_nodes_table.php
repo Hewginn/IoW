@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status', ['Online', 'Offline', 'In Development', 'Faulty'])->default('Offline');
             $table->string('main_unit')->nullable();
             $table->boolean('control')->default(false);
-            $table->boolean('analyze_images')->default(true);
+            $table->boolean('analyze_images')->default(false);
         });
     }
 

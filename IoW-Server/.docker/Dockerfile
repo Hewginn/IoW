@@ -7,7 +7,6 @@ RUN apt-get update && \
     apt-get --purge autoremove -y
 
 RUN apt-get install -y \
-#    openssl # \
     zip \
     zlib1g-dev \
     libzip-dev

@@ -45,7 +45,7 @@ class NodesController extends Controller
             'status' => 'required|string|max:255',
             'main_unit' => 'string|max:255|nullable',
             'control' => 'boolean|nullable',
-            'analyze_images' => 'boolean|required',
+            'analyze_images' => 'boolean|nullable',
         ]);
 
         $node = Node::create($validated);

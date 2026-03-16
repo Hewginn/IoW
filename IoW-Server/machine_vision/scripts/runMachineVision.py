@@ -8,13 +8,13 @@ import cv2
 # Getting the path to the model and to the image
 image_path = sys.argv[1]
 full_image_path = os.path.join("/var/www/storage/app/private", image_path)
-onnx_model_path = "/var/www/machine_vision/weights/best_20_resize.onnx"
+onnx_model_path = "/var/www/machine_vision/weights/best_20_resize_without_lb.onnx"
 
 
 # Load ONNX model
 session = ort.InferenceSession(onnx_model_path, providers=["CPUExecutionProvider"])
 
-class_names = ["Black Rot", "Downy Mildew", "Esca", "Healthy", "Leaf Blight", "Powdery Mildew"]
+class_names = ["Black Rot", "Downy Mildew", "Esca", "Healthy", "Powdery Mildew"]
 
 # Check pixel brightness
 img = cv2.imread(full_image_path, cv2.IMREAD_GRAYSCALE)

@@ -8,7 +8,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SensorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\NotificationsController;
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
 //    Route::get('/register', [AuthController::class, 'showRegister'])->name('register.show');

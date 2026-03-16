@@ -33,14 +33,25 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="aggregate_interval" class="form-label">Bucket Duration (Hours)</label>
+                            <label for="aggregate_time" class="aggregate_time">Duration Unit</label>
+                            <select name="aggregate_time" id="aggregate_time" class="form-select">
+                                <option value="">Choose Duration Unit</option>
+                                <option value="hour" {{$data_type->aggregate_time === 'hour' ? 'selected' : ''}} >Hour</option>
+                                <option value="day" {{$data_type->aggregate_time === 'day' ? 'selected' : ''}}>Day</option>
+                                <option value="month" {{$data_type->aggregate_time === 'month' ? 'selected' : ''}}>Month</option>
+                                <option value="year" {{$data_type->aggregate_time === 'year' ? 'selected' : ''}}>Year</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="aggregate_length" class="form-label">Bucket Duration</label>
                             <input
                                 type="number"
-                                name="aggregate_interval"
-                                id="aggregate_interval"
+                                name="aggregate_length"
+                                id="aggregate_length"
                                 class="form-control"
                                 min="0"
-                                value="{{ old('aggregate_interval', $data_type->aggregate_interval ?? 0) }}"
+                                value="{{ old('aggregate_interval', $data_type->aggregate_length ?? 0) }}"
                             >
                         </div>
 
