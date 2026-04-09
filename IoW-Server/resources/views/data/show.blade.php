@@ -11,7 +11,7 @@
         <div class="container mt-5">
             <div class="card shadow">
                 <div class="card-header">
-                    <h4>Create Diagram</h4>
+                    <h4>Create Chart</h4>
                 </div>
 
                 <div class="card-body">
@@ -19,9 +19,9 @@
                         @csrf
 
                         <div class="mb-3">
-                            <label for="aggregate_by" class="form-label">Aggregate Type</label>
+                            <label for="aggregate_by" class="form-label">Aggregate Function</label>
                             <select name="aggregate_by" id="aggregate_by" class="form-select">
-                                <option value="" >Select Aggregate Type</option>
+                                <option value="" >Select Aggregate Function</option>
                                 <option value="avg" {{ $data_type->aggregate_by === 'avg' ? 'selected' : '' }} >Average</option>
                                 <option value="sum" {{ $data_type->aggregate_by === 'sum' ? 'selected' : '' }} >Summary</option>
                                 <option value="min" {{ $data_type->aggregate_by === 'min' ? 'selected' : '' }} >Minimum</option>
@@ -33,9 +33,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="aggregate_time" class="aggregate_time">Duration Unit</label>
+                            <label for="aggregate_time" class="aggregate_time">Time Unit</label>
                             <select name="aggregate_time" id="aggregate_time" class="form-select">
-                                <option value="">Choose Duration Unit</option>
+                                <option value="">Choose Time Unit</option>
                                 <option value="hour" {{$data_type->aggregate_time === 'hour' ? 'selected' : ''}} >Hour</option>
                                 <option value="day" {{$data_type->aggregate_time === 'day' ? 'selected' : ''}}>Day</option>
                                 <option value="month" {{$data_type->aggregate_time === 'month' ? 'selected' : ''}}>Month</option>
@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="aggregate_length" class="form-label">Bucket Duration</label>
+                            <label for="aggregate_length" class="form-label">Interval Size (if 0 plot all data)</label>
                             <input
                                 type="number"
                                 name="aggregate_length"
@@ -56,11 +56,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="diagram_type" class="form-label">Diagram Type</label>
+                            <label for="diagram_type" class="form-label">Chart Type</label>
                             <select name="diagram_type" id="diagram_type" class="form-select">
-                                <option value="">Choose Diagram Type</option>
-                                <option value="line" {{$data_type->diagram_type === 'line' ? 'selected' : ''}} >Line Diagram</option>
-                                <option value="bar" {{$data_type->diagram_type === 'bar' ? 'selected' : ''}}>Column Diagram</option>>
+                                <option value="">Choose Chart Type</option>
+                                <option value="line" {{$data_type->diagram_type === 'line' ? 'selected' : ''}} >Line Chart</option>
+                                <option value="bar" {{$data_type->diagram_type === 'bar' ? 'selected' : ''}}>Column Chart</option>>
                             </select>
                         </div>
 

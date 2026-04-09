@@ -8,7 +8,7 @@
         </div>
 
         <div class="text-end">
-            <h2>{{ $vision->result }}</h2>
+            <h2>{{ \Illuminate\Support\Str::of($vision->result)->replace('_', ' ')->title()}}</h2>
         </div>
 
     </div>

@@ -104,11 +104,13 @@ class AggregateService{
                 return 0;
             }
 
-            $counts = array_count_values($values);
+            $normalized = array_map(fn($v) => (string) round($v, 2), $values);
+
+            $counts = array_count_values($normalized);
 
             $maxCount = max($counts);
 
-            $modes = array_keys($counts, $maxCount);
+            $modes = array_map('floatval', array_keys($counts, $maxCount));
 
             return array_sum($modes) / count($modes);
         }

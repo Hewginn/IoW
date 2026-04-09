@@ -14,7 +14,7 @@ onnx_model_path = "/var/www/machine_vision/weights/best_20_resize_without_lb.onn
 # Load ONNX model
 session = ort.InferenceSession(onnx_model_path, providers=["CPUExecutionProvider"])
 
-class_names = ["Black Rot", "Downy Mildew", "Esca", "Healthy", "Powdery Mildew"]
+class_names = ["black_rot", "downy_mildew", "esca", "healthy", "powdery_mildew"]
 
 # Check pixel brightness
 img = cv2.imread(full_image_path, cv2.IMREAD_GRAYSCALE)

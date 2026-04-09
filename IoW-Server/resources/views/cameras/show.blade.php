@@ -40,7 +40,7 @@
                 </td>
                 <td>{{ $image->created_at }}</td>
                 @if($image->vision)
-                    <td> <a class="{{ $color }}" href="{{ route('images.vision', $image) }}">{{ $image->vision->result }}</a></td>
+                    <td> <a class="{{ $color }}" href="{{ route('images.vision', $image) }}">{{ \Illuminate\Support\Str::of($image->vision->result)->replace('_', ' ')->title() }}</a></td>
                 @else
                     <td> - </td>
                 @endif

@@ -5,28 +5,34 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <div class="row g-4">
+        <div class="row g-2">
 
-            <div class="col-md-8">
-                <div class="card shadow-sm text-center p-4 h-100">
-                    <h2 class="fw-bold">Welcome back!</h2>
+            <!-- Welcome card -->
+            <div class="col-12 col-md-8">
+                <div class="card shadow-sm text-center p-2 h-100">
+                    <h5 class="fw-bold">Welcome back!</h5>
+
                     <img src="{{ asset('image/vineyard.png') }}"
-                         class="img-fluid border-2 border-secondary rounded h-100 p-5"
-                         alt="Image"
-                         style="max-height: 350px; object-fit: contain">
-                    <p class="fs-5 text-muted">
-                        Here’s a quick overview of your latest sensor data and camera activity.
+                         class="img-fluid border-1 border-secondary rounded p-2"
+                         style="max-height: 180px; object-fit: contain">
+
+                    <p class="small text-muted mb-0">
+                        Quick overview of your latest sensor data.
                     </p>
                 </div>
             </div>
 
+            <!-- Image card -->
             @if($image)
-                <div class="col-md-4">
+                <div class="col-12 col-md-4">
                     <div class="card shadow-sm text-center h-100">
-                        <div class="card-header fw-semibold">Latest Image</div>
-                        <div class="card-body">
-                            <img src="{{ url('/camera-image/' . $image->path) }}" class="img-fluid border-2 border-secondary rounded" alt="Image">
-                            <p class="mt-3 fs-5">
+                        <div class="card-header py-1 small fw-semibold">Latest Image</div>
+                        <div class="card-body p-2">
+                            <img src="{{ url('/camera-image/' . $image->path) }}"
+                                 class="img-fluid rounded"
+                                 style="max-height: 150px; object-fit: cover">
+
+                            <p class="mt-2 small mb-0">
                                 <strong>{{ $image->camera->name }}</strong>
                             </p>
                         </div>
@@ -34,19 +40,26 @@
                 </div>
             @endif
 
+            <!-- Data cards -->
             @foreach($data_types as $data_type)
-                <div class="col-md-4">
+                <div class="col-6 col-md-4 col-lg-4">
                     <div class="card shadow-sm text-center h-100">
-                        <div class="card-header fw-semibold">{{ $data_type->data_type }}</div>
-                        <div class="card-body">
-                            <canvas id="{{ Str::slug($data_type->data_type) . '-gauge' }}"></canvas>
-                            <p class="fs-5">
+                        <div class="card-header py-1 small fw-semibold">
+                            {{ $data_type->data_type }}
+                        </div>
+
+                        <div class="card-body p-2">
+                            <canvas id="{{ Str::slug($data_type->data_type) . '-gauge' }}"
+                                    style="max-height: 120px;"></canvas>
+
+                            <p class="small mb-0">
                                 <strong>{{ $latest_values[$data_type->id]->value . " " . $data_type->unit }}</strong>
                             </p>
                         </div>
                     </div>
                 </div>
             @endforeach
+
         </div>
     </div>
     <script>
@@ -94,9 +107,9 @@
                             legend: { display: false },
                             gaugeImage: {
                                 image: img,   // pass preloaded image
-                                width: 100,
-                                height: 100,
-                                yOffset: 30
+                                width: 60,
+                                height: 60,
+                                yOffset: 10
                             }
                         }
                     }

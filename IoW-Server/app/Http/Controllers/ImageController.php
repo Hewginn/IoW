@@ -47,12 +47,11 @@ class ImageController extends Controller
         $vision = DB::table('visions')
             ->select([
                 DB::raw('`result`'),
-                DB::raw('`Healthy` as healthy'),
-                DB::raw('`Black Rot` as black_rot'),
-                DB::raw('`Leaf Blight` as leaf_blight'),
-                DB::raw('`Esca` as esca'),
-                DB::raw('`Downy Mildew` as downy_mildew'),
-                DB::raw('`Powdery Mildew` as powdery_mildew'),
+                DB::raw('`healthy`'),
+                DB::raw('`black_rot`'),
+                DB::raw('`esca`'),
+                DB::raw('`downy_mildew`'),
+                DB::raw('`powdery_mildew`'),
             ])
             ->where('image_id', $image->id)
             ->first();

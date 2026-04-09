@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('data_types', function (Blueprint $table) {
             $table->id();
             $table->string('data_type')->unique();
-            $table->text('image_path');
+            $table->text('image_path')->default('data_types_images\DataTypePlaceHolder.png');
             $table->string('unit');
             $table->float('max');
             $table->enum('aggregate_by', ['avg', 'sum', 'max', 'min', 'median', 'mode', 'count'])->nullable();

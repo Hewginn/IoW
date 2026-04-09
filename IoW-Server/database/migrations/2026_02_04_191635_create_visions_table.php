@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('image_id')->unique()->constrained('images')->onDelete('cascade');
             $table->string('result');
-            $table->float('Healthy');
-            $table->float('Black Rot');
-            $table->float('Esca');
-            $table->float('Downy Mildew');
-            $table->float('Powdery Mildew');
+            $table->float('healthy');
+            $table->float('black_rot');
+            $table->float('esca');
+            $table->float('downy_mildew');
+            $table->float('powdery_mildew');
         });
     }
 

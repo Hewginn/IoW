@@ -8,6 +8,7 @@ use App\Models\SensorMessage;
 use App\Services\AggregateService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use function PHPSTORM_META\map;
 
 class DataController extends Controller
@@ -59,52 +60,7 @@ class DataController extends Controller
 
         $unit = $data_type->aggregate_time; // hour | day | month | year
         $size = $data_type->aggregate_length;
-
-        $chart_data = $data_type->messages()
-            ->whereNull('error_message')
-            ->orderBy('created_at', 'asc')
-            ->get()
-            ->groupBy(function ($item) use ($unit, $size) {
-
-                $date = $item->created_at->copy();
-
-                switch ($unit) {
-
-                    case 'hour':
-                        $bucket = floor($date->hour / $size) * $size;
-                        $date->setTime($bucket, 0, 0);
-                        break;
-
-                    case 'day':
-                        $bucket = floor(($date->day - 1) / $size) * $size + 1;
-                        $date->setDate($date->year, $date->month, $bucket)->startOfDay();
-                        break;
-
-                    case 'month':
-                        $bucket = floor(($date->month - 1) / $size) * $size + 1;
-                        $date->setDate($date->year, $bucket, 1)->startOfDay();
-                        break;
-
-                    case 'year':
-                        $bucket = floor($date->year / $size) * $size;
-                        $date->setDate($bucket, 1, 1)->startOfDay();
-                        break;
-                }
-
-                return $date->format('Y-m-d H:i:s');
-            })
-            ->map(function ($group, $bucketStart) use ($unit, $size) {
-
-                $start = Carbon::parse($bucketStart);
-                $end = $start->copy()->add($size, $unit);
-
-                return [
-                    'label' => $start->format('Y-m-d H:i') . ' - ' . $end->format('Y-m-d H:i'),
-                    'start' => $start->toDateTimeString(),
-                    'end' => $end->toDateTimeString(),
-                    'values' => $group->pluck('value')->values()->toArray(),
-                ];
-            });
+        $chart_data = (new \App\Services\BucketService)->createBucket($data_type, $unit, $size);
 
         // Checking if making a chart is possible
         if($chart_data->isEmpty()){
@@ -168,7 +124,15 @@ class DataController extends Controller
         $validated = $request->validate([
             'aggregate_by' => ['required', 'string', 'in:avg,sum,max,min,median,mode,count'],
             'aggregate_time' => ['required', 'string', 'in:hour,day,month,year'],
-            'aggregate_length' => ['required', 'integer', 'min:0', 'max:24'],
+            'aggregate_length' => [
+                'required',
+                'integer',
+                'min:0',
+                Rule::when(
+                    $request->aggregate_time === 'hour',
+                    ['max:24']
+                ),
+            ],
             'diagram_type' => ['required', 'string', 'in:bar,line'],
         ]);
 

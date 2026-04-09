@@ -134,9 +134,32 @@ BorHáló prototípus
 Összefoglalás
 
 TODO:
-	Doboz elkészítése
-	Hiba hiba, kód javítás
-	Tesztelés
-	Állomás expect
-	 
+	0. Minde hol:
+		Kód szövegdobozokban
+		Minden kereszthivatkozva
+		Eddigiek külön elmentve
+	1. Címsor fix:
+		1. Bevezetés
+		2. Kapcsolodó munkák
+		3. Tervezés
+		4. Implementáció
+		5. Tesztelés
+		6. Összefoglalás
+	2. Követelmények fix
+		Funkcionáli, nem funkcionális
+		Táblázatba
+		gyors
+	3. Tervezés fix
+		Absztrakt fogalmazá
+		Nem absztrak migrálása implementálásahoz
+		Adatkapcsolat modell vertikálisan
+		Gépi látás integráció implementáláshoz
+		Állomásnál osztály diagram felvétel
+		Pontos eszközök kivétele
+		Feladat leírása
+	4. Implementáció fix
+		Több listás felsorolás
+		Pontos technológiák
+		UI és frontend kevesebb
+		Osztály diagram angolosítás
 
