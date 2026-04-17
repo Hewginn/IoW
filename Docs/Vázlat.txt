@@ -134,32 +134,16 @@ BorHáló prototípus
 Összefoglalás
 
 TODO:
-	0. Minde hol:
-		Kód szövegdobozokban
-		Minden kereszthivatkozva
-		Eddigiek külön elmentve
-	1. Címsor fix:
-		1. Bevezetés
-		2. Kapcsolodó munkák
-		3. Tervezés
-		4. Implementáció
-		5. Tesztelés
-		6. Összefoglalás
-	2. Követelmények fix
-		Funkcionáli, nem funkcionális
-		Táblázatba
-		gyors
-	3. Tervezés fix
-		Absztrakt fogalmazá
-		Nem absztrak migrálása implementálásahoz
-		Adatkapcsolat modell vertikálisan
-		Gépi látás integráció implementáláshoz
-		Állomásnál osztály diagram felvétel
-		Pontos eszközök kivétele
-		Feladat leírása
-	4. Implementáció fix
-		Több listás felsorolás
-		Pontos technológiák
-		UI és frontend kevesebb
-		Osztály diagram angolosítás
+	A 2. fejezet feladatát kicsit félreértetted. Ide a mások által elkészített munka kell, mások kutatási eredményei - egy áttekintés a technológia jelen állásáról, piackutatás, stb. Javaslom, hogy a mostani 2. fejezet neve legyen módszertan, mivel itt főleg architektúratervezésről van szó.
 
+	Az alkatrészjegyzéket és az eszkzöök felsorolását inkább az implementáció részbe raknám. Azért mert előtte meg vannak a használati eseteid, rendszerelemeid, ezekhet társítasz eszözöket, szenzorokat.
+
+
+TODO:
+	Ábrák hitelességének átnézése 	-> Ábrajegyzékek
+	Github rendezése				-> Kész github, takarított kód
+	Absztrakt megírása 				-> Kivonat, Abstract
+	Mellékletek kigyűjtése			-> Melléklet mappa
+	Források rendezése				-> Irodalom jegyzék
+	Formai áttekintés ellenőrzés	-> Útmutató szerint
+(Kutatási rész javítása ha kell)
