@@ -73,6 +73,6 @@ class TestSeeder extends Seeder
                         'images'
                     )
             )
-            ->create(NodeFactory::NODE_1);
+            ->create();
     }
 }

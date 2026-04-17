@@ -86,7 +86,7 @@ class TestSeeder2 extends Seeder
                         'images'
                     )
             )
-            ->create(NodeFactory::NODE_1);
+            ->create();
 
         $node = Node::factory()
             ->has(
@@ -119,6 +119,6 @@ class TestSeeder2 extends Seeder
                         'images'
                     )
             )
-            ->create(NodeFactory::NODE_2);
+            ->create();
     }
 }

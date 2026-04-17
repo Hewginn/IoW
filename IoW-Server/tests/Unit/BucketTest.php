@@ -23,13 +23,15 @@ class BucketTest extends TestCase
         $bucketService = new BucketService();
 
         #Loading the data
-        $data_type = DataType::get()->first();
+        $data = DataType::get()->firstOrFail()->messages()
+            ->with('sensor')
+            ->orderBy('created_at', 'asc')->whereNull('error_message')->get();
 
         # Getting the buckets with size 0 for each unit
-        $hourBucket = $bucketService->createBucket($data_type);
-        $dayBucket = $bucketService->createBucket($data_type, 'day');
-        $monthBucket = $bucketService->createBucket($data_type, 'month');
-        $yearBucket = $bucketService->createBucket($data_type, 'year');
+        $hourBucket = $bucketService->createBucket($data);
+        $dayBucket = $bucketService->createBucket($data, 'day');
+        $monthBucket = $bucketService->createBucket($data, 'month');
+        $yearBucket = $bucketService->createBucket($data, 'year');
 
         # Getting messages for assertion
         $messages = SensorMessage::get();
@@ -61,10 +63,12 @@ class BucketTest extends TestCase
         $bucketService = new BucketService();
 
         #Loading the data
-        $data_type = DataType::get()->first();
+        $data = DataType::get()->firstOrFail()->messages()
+            ->with('sensor')
+            ->orderBy('created_at', 'asc')->whereNull('error_message')->get();
 
         # Getting the buckets with size 0 for each unit
-        $hourBucket = $bucketService->createBucket($data_type, 'hour',1);
+        $hourBucket = $bucketService->createBucket($data, 'hour',1);
 
         # Getting messages for assertion
         $messages = SensorMessage::get();
@@ -81,13 +85,14 @@ class BucketTest extends TestCase
         $expected_values = array_fill(0, $number_of_values / 2, $value_array);
         $this->assertEquals($bucket_values, $expected_values);
         #Hour buckets dates
-        $bucket_starts = $hourBucket->pluck('start')->toArray();
+        $bucket_starts = $hourBucket->pluck('label')->toArray();
         $expected_starts = [];
         foreach ($years as $year) {
             foreach ($months as $month) {
                 foreach ($days as $day) {
                     foreach ($hours as $hour) {
-                        $expected_starts[] = $year . '-' . $month . '-' . $day . ' ' . $hour . ':' . $minutes[0] . ':00';
+                        $end = sprintf('%02d', $hour + 1);
+                        $expected_starts[] = $year . '-' . $month . '-' . $day . ' ' . $hour . ':' . $minutes[0] . ' - ' . $year . '-' . $month . '-' . $day . ' ' . $end . ':' . $minutes[0];
                     }
                 }
             }
@@ -104,9 +109,11 @@ class BucketTest extends TestCase
         $bucketService = new BucketService();
 
         #Loading the data
-        $data_type = DataType::get()->first();
+        $data = DataType::get()->firstOrFail()->messages()
+            ->with('sensor')
+            ->orderBy('created_at', 'asc')->whereNull('error_message')->get();
 
-        $dayBucket = $bucketService->createBucket($data_type, 'day', 1);
+        $dayBucket = $bucketService->createBucket($data, 'day', 1);
 
         # Getting messages for assertion
         $messages = SensorMessage::get();
@@ -121,12 +128,13 @@ class BucketTest extends TestCase
         $expected_values = array_fill(0, $number_of_values / 8, $value_array);
         $this->assertEquals($bucket_values, $expected_values);
         #Day buckets dates
-        $bucket_starts = $dayBucket->pluck('start')->toArray();
+        $bucket_starts = $dayBucket->pluck('label')->toArray();
         $expected_starts = [];
         foreach ($years as $year) {
             foreach ($months as $month) {
                 foreach ($days as $day) {
-                    $expected_starts[] = $year . '-' . $month . '-' . $day . ' 00:00:00';
+                    $end_day = sprintf('%02d', $day + 1);
+                    $expected_starts[] = $year . '-' . $month . '-' . $day . ' 00:00 - ' . $year . '-' . $month . '-' . $end_day . ' 00:00';
                 }
             }
         }
@@ -142,9 +150,11 @@ class BucketTest extends TestCase
         $bucketService = new BucketService();
 
         #Loading the data
-        $data_type = DataType::get()->first();
+        $data = DataType::get()->firstOrFail()->messages()
+            ->with('sensor')
+            ->orderBy('created_at', 'asc')->whereNull('error_message')->get();
 
-        $monthBucket = $bucketService->createBucket($data_type, 'month', 1);
+        $monthBucket = $bucketService->createBucket($data, 'month', 1);
 
         # Getting messages for assertion
         $messages = SensorMessage::get();
@@ -158,11 +168,12 @@ class BucketTest extends TestCase
         $expected_values = array_fill(0, $number_of_values / 16, $value_array);
         $this->assertEquals($bucket_values, $expected_values);
         #Month buckets dates
-        $bucket_starts = $monthBucket->pluck('start')->toArray();
+        $bucket_starts = $monthBucket->pluck('label')->toArray();
         $expected_starts = [];
         foreach ($years as $year) {
             foreach ($months as $month) {
-                $expected_starts[] = $year . '-' . $month . '-01 00:00:00';
+                $end_month = sprintf('%02d', $month + 1);
+                $expected_starts[] = $year . '-' . $month . '-01 00:00 - ' . $year . '-' . $end_month . '-01 00:00';
             }
         }
         $this->assertEquals($bucket_starts, $expected_starts);
@@ -177,9 +188,11 @@ class BucketTest extends TestCase
         $bucketService = new BucketService();
 
         #Loading the data
-        $data_type = DataType::get()->first();
+        $data = DataType::get()->firstOrFail()->messages()
+            ->with('sensor')
+            ->orderBy('created_at', 'asc')->whereNull('error_message')->get();
 
-        $yearBucket = $bucketService->createBucket($data_type, 'year', 1);
+        $yearBucket = $bucketService->createBucket($data, 'year', 1);
 
         # Getting messages for assertion
         $messages = SensorMessage::get();
@@ -192,10 +205,11 @@ class BucketTest extends TestCase
         $expected_values = array_fill(0, $number_of_values / 32, $value_array);
         $this->assertEquals($bucket_values, $expected_values);
         #Year buckets dates
-        $bucket_starts = $yearBucket->pluck('start')->toArray();
+        $bucket_starts = $yearBucket->pluck('label')->toArray();
         $expected_starts = [];
         foreach ($years as $year) {
-            $expected_starts[] = $year . '-01-01 00:00:00';
+            $end_year = sprintf('%02d', $year + 1);
+            $expected_starts[] = $year . '-01-01 00:00 - ' . $end_year . '-01-01 00:00';
         }
         $this->assertEquals($bucket_starts, $expected_starts);
     }

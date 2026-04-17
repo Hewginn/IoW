@@ -28,11 +28,12 @@ class DataController extends Controller
     public function show(DataType $data_type)
     {
 
-        // Creating quarry builder
-        $data = $data_type->messages();
+        $messagesQuarry = $data_type->messages()
+            ->with('sensor')
+            ->orderBy('created_at', 'asc');
 
         //Getting raw data
-        $raw_data = $data->orderBy('created_at', 'desc')->paginate(10);
+        $raw_data = (clone $messagesQuarry)->paginate(10);
 
         // Checking if is there any data
         if ($raw_data->isEmpty()) {
@@ -60,7 +61,9 @@ class DataController extends Controller
 
         $unit = $data_type->aggregate_time; // hour | day | month | year
         $size = $data_type->aggregate_length;
-        $chart_data = (new \App\Services\BucketService)->createBucket($data_type, $unit, $size);
+
+        $messages = (clone $messagesQuarry)->whereNull('error_message')->get();
+        $chart_data = (new \App\Services\BucketService)->createBucket($messages, $unit, $size);
 
         // Checking if making a chart is possible
         if($chart_data->isEmpty()){
